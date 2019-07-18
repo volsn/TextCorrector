@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+       <title>Text Correction</title>
+    </head>
+   <body>
+      <div class="container">
+          <div class="jumbotron">
+              
+              <form action="/uploader" method="POST"
+                 enctype="multipart/form-data">
+                  
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Upload</span>
+                      </div>
+                      <div class="custom-file">
+                        <input type="file" name="file" class="custom-file-input"
+                          aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                      </div>
+                    </div>
+                  
+                  <br/>
+
+                  <label for="formControlRangeKSize">KSize</label>
+                  <input type="range" min="1" max="33" class="form-control-range" id="formControlRangeKSize" name="ksize">
+                  
+                  <br/>
+                  
+                  <label for="formControlRangeIter">Iterations</label>
+                  <input type="range" min="1" max="15" class="form-control-range" id="formControlRangeIter" name="iterations">
+                  
+                  <br/>
+                  
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" name="mode"
+                             id="modeRadios1" value="erode" checked>
+                      <label class="form-check-label" for="modeRadios1">
+                        Erode
+                      </label>
+                  </div>
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" name="mode"
+                             id="modeRadios2" value="dilate">
+                      <label class="form-check-label" for="modeRadios2">
+                        Dilate
+                      </label>
+                  </div>
+                  
+                  <br/>
+                  <input class="btn btn-primary" type="submit"/>
+              </form>
+          </div>
+      </div>
+   </body>
+</html>
