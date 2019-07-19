@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import os
+import svgwrite
 
 
 def locate_letters(image):
@@ -71,3 +72,45 @@ def affect_letters(letters, mode, ksize=5, iterations=3):
         #cv2.imwrite('Result/{}.png'.format(i), eroded)
         
     return letters
+
+
+def generate_svg(image, color='#000000'):
+    
+    img_cnt, cnts, hierarchy = cv2.findContours(image.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    outer_points_groups = []
+    inner_points_groups = []
+
+    for i, cnt in enumerate(cnts):
+
+        if hierarchy[0][i][3] == 0:
+            
+            outer_points = []
+
+            for point in cnt[::2]:
+
+                pnt = (int(point[0][0]),int(point[0][1]))
+                outer_points.append(pnt)
+                
+            outer_points_groups.append(outer_points)
+
+        elif hierarchy[0][i][3] > 0:
+
+            inner_points = []
+
+            for point in cnt[::2]:
+
+                pnt = (int(point[0][0]),int(point[0][1]))
+                inner_points.append(pnt)
+
+            inner_points_groups.append(inner_points)
+            
+    
+    dwg = svgwrite.Drawing('static/vector.svg', profile='tiny')
+    
+    for group in outer_points_groups:
+        dwg.add(dwg.polyline(group, fill=color))
+        
+    for group in inner_points_groups:
+        dwg.add(dwg.polyline(group, fill='#ffffff'))
+        
+    dwg.save()
